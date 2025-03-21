@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shadow Portal - نظام الوصول الحصري</title>
+    <style>
+        :root {
+            --hacker-green: #00ff00;
+            --blood-red: #ff0000;
+            --deep-black: #000000;
+        }
+
+        body {
+            margin: 0;
+            height: 100vh;
+            background: var(--deep-black);
+            overflow: hidden;
+            font-family: 'Consolas', monospace;
+            position: relative;
+        }
+
+        .matrix-rain {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            opacity: 0.3;
+            z-index: 0;
+        }
+
+        .firewall {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 500px;
+            background: rgba(0, 0, 0, 0.9);
+            border: 3px solid var(--hacker-green);
+            padding: 2rem;
+            box-shadow: 0 0 50px var(--hacker-green);
+            z-index: 1;
+        }
+
+        .security-alert {
+            color: var(--blood-red);
+            border: 1px solid var(--blood-red);
+            padding: 1rem;
+            margin: 1rem 0;
+            animation: alert-pulse 1s infinite;
+        }
+
+        @keyframes alert-pulse {
+            50% { opacity: 0.5; }
+        }
+
+        .access-code {
+            width: 100%;
+            padding: 1rem;
+            margin: 1rem 0;
+            background: transparent;
+            border: 1px solid var(--hacker-green);
+            color: var(--hacker-green);
+            font-size: 1.2em;
+            text-align: right;
+        }
+
+        .access-code:focus {
+            outline: none;
+            box-shadow: 0 0 20px var(--hacker-green);
+        }
+
+        .decrypt-button {
+            width: 100%;
+            padding: 1rem;
+            background: linear-gradient(45deg, #00ff00, #003300);
+            border: none;
+            color: black;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+            position: relative;
+        }
+
+        .decrypt-button:hover {
+            background: linear-gradient(45deg, #00ff00, #00cc00);
+            box-shadow: 0 0 30px var(--hacker-green);
+        }
+
+        .terminal {
+            background: rgba(0, 0, 0, 0.8);
+            color: var(--hacker-green);
+            padding: 1rem;
+            margin-top: 2rem;
+            border: 1px solid var(--hacker-green);
+            height: 150px;
+            overflow-y: auto;
+        }
+
+        .anonymous-logo {
+            text-align: center;
+            font-size: 2.5em;
+            margin-bottom: 1rem;
+            text-shadow: 0 0 10px var(--hacker-green);
+        }
+    </style>
+</head>
+<body>
+    <div class="matrix-rain"></div>
+    
+    <div class="firewall">
+        <div class="anonymous-logo">
+            <span style="color: var(--blood-red)">Anonymous</span> Access
+        </div>
+
+        <div class="security-alert">
+            ! تحذير: تم اكتشاف 127 محاولة اختراق
+        </div>
+
+        <form id="shadowForm">
+            <input type="text" class="access-code" placeholder="الاسم السري" required>
+            <input type="password" class="access-code" placeholder="شيفرة الدخول" required>
+
+            <button type="submit" class="decrypt-button">
+                فك التشفير &gt;&gt;
+            </button>
+        </form>
+
+        <div class="terminal" id="hackingTerminal">
+            > جاري تحميل نظام الحماية...<br>
+            > تشفير AES-256 مفعل<br>
+            > جارٍ مسح الشبكة...<br>
+            > تم اكتشاف 3 تهديدات محتملة<br>
+        </div>
+    </div>
+
+    <script>
+        // محاكاة نظام الاختراق
+        class ShadowSystem {
+            constructor() {
+                this.attempts = 0;
+                this.terminal = document.getElementById('hackingTerminal');
+            }
+
+            addTerminalMessage(message) {
+                this.terminal.innerHTML += `> ${message}<br>`;
+                this.terminal.scrollTop = this.terminal.scrollHeight;
+            }
+
+            async decryptAccess() {
+                const username = document.querySelector('input[type="text"]').value;
+                const password = document.querySelector('input[type="password"]').value;
+
+                this.addTerminalMessage(`جارٍ فك تشفير بيانات ${username}...`);
+                
+                await new Promise(resolve => setTimeout(resolve, 2000));
+                
+                if(username === 'V' && password === 'vendetta') {
+                    this.addTerminalMessage('تم الوصول إلى الخوادم الرئيسية!');
+                    this.initiateRedirection();
+                } else {
+                    this.attempts++;
+                    this.addTerminalMessage(`فشل المصادقة (المحاولة ${this.attempts}/3)`);
+                    if(this.attempts >= 3) this.lockSystem();
+                }
+            }
+
+            initiateRedirection() {
+                window.location.href = 'https://anonymous.com';
+            }
+
+            lockSystem() {
+                document.body.innerHTML = `
+                    <div style="
+                        color: red;
+                        text-align: center;
+                        padding: 2rem;
+                        font-size: 2em;
+                        text-shadow: 0 0 10px red;
+                    ">
+                        <h1>SYSTEM LOCKED</h1>
+                        <p>الاتصال بالدعم الفني: @MSR04</p>
+                        <p>📱 01032125588</p>
+                    </div>
+                `;
+            }
+        }
+
+        const shadowGate = new ShadowSystem();
+
+        document.getElementById('shadowForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            shadowGate.decryptAccess();
+        });
+
+        // محاكاة مطر المصفوفة
+        const chars = "01ABCDEFGHIJKLMNOPQRSTUVWXYZ$%&@#";
+        setInterval(() => {
+            document.querySelector('.matrix-rain').innerHTML = 
+                Array(100).fill().map(() => 
+                    `<span style="
+                        color: ${Math.random() > 0.1 ? '#00ff00' : '#ff0000'};
+                        position: absolute;
+                        left: ${Math.random() * 100}%;
+                        top: ${Math.random() * 100}%;
+                        animation: fall ${Math.random() * 5 + 3}s linear infinite;
+                    ">${chars[Math.floor(Math.random() * chars.length)]}</span>`
+                ).join('');
+        }, 100);
+
+        // إضافة أنيميشن السقوط
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes fall {
+                to { transform: translateY(100vh); }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>
