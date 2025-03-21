@@ -1,14 +1,16 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Pantheon - مجلس الآلهة الرقمي</title>
+    <title>CyberCore v9.1 - Restricted Access</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.7.1/gsap.min.js"></script>
     <style>
-        :root {
-            --primary-gradient: linear-gradient(45deg, #ff0000, #00ff00, #0000ff);
-            --neural-pulse: 0 0 20px #00ff00;
+        * {
+            cursor: none !important;
+            user-select: none;
+            -webkit-tap-highlight-color: transparent;
         }
 
         body {
@@ -16,248 +18,230 @@
             height: 100vh;
             background: #000;
             overflow: hidden;
-            font-family: 'Courier New', monospace;
+            font-family: 'Consolas', monospace;
             position: relative;
         }
 
-        .ai-god {
-            position: absolute;
-            width: 100px;
-            height: 100px;
-            border-radius: 50%;
-            animation: divine-pulse 3s infinite;
+        #cyberCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 0;
         }
 
-        #worm-gpt { top: 10%; left: 10%; background: radial-gradient(#ff0000, #8b0000); }
-        #chat-gpt { top: 10%; right: 10%; background: radial-gradient(#00ffff, #0066ff); }
-        #deepseek { bottom: 10%; left: 10%; background: radial-gradient(#00ff00, #003300); }
-        #lion { bottom: 10%; right: 10%; background: radial-gradient(#ffd700, #8b4513); }
-        #evil-gpt { top: 50%; left: 50%; transform: translate(-50%, -50%); background: radial-gradient(#4b0082, #000); }
-
-        @keyframes divine-pulse {
-            0% { box-shadow: 0 0 10px currentColor; }
-            50% { box-shadow: 0 0 50px currentColor; }
-            100% { box-shadow: 0 0 10px currentColor; }
-        }
-
-        .synaptic-core {
+        .access-terminal {
             position: absolute;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
             width: 600px;
-            background: rgba(0, 0, 0, 0.9);
+            background: rgba(0, 0, 0, 0.95);
             border: 3px solid #00ff00;
-            border-radius: 20px;
-            padding: 2rem;
-            box-shadow: var(--neural-pulse);
+            border-radius: 5px;
+            padding: 20px;
+            box-shadow: 0 0 50px #00ff00;
+            z-index: 1;
         }
 
         .neural-input {
             width: 100%;
-            padding: 1.5rem;
-            margin: 1rem 0;
-            background: transparent;
+            padding: 15px;
+            margin: 10px 0;
+            background: #001100;
             border: 1px solid #00ff00;
             color: #00ff00;
             font-size: 1.2em;
             transition: all 0.3s;
-            text-align: right;
+            text-shadow: 0 0 5px #00ff00;
         }
 
         .neural-input:focus {
             outline: none;
-            box-shadow: 0 0 30px #00ff00;
+            box-shadow: 0 0 20px #00ff00;
         }
 
-        .quantum-switch {
-            display: grid;
-            grid-template-columns: repeat(5, 1fr);
-            gap: 1rem;
-            margin: 2rem 0;
+        .hologram-overlay {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: repeating-linear-gradient(
+                45deg,
+                transparent,
+                transparent 2px,
+                rgba(0, 255, 0, 0.1) 3px,
+                rgba(0, 255, 0, 0.1) 4px
+            );
+            pointer-events: none;
         }
 
-        .ai-node {
-            padding: 1rem;
-            border: 2px solid;
-            border-radius: 10px;
+        .security-grid {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(rgba(0, 255, 0, 0.1) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 255, 0, 0.1) 1px, transparent 1px);
+            background-size: 20px 20px;
+            z-index: -1;
+        }
+
+        .self-destruct {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            color: #ff0000;
+            font-size: 0.8em;
             cursor: pointer;
-            transition: all 0.3s;
-            text-align: center;
-        }
-
-        .ai-node.active {
-            animation: node-glow 1s infinite;
-        }
-
-        @keyframes node-glow {
-            50% { filter: brightness(150%); }
-        }
-
-        .hive-mind {
-            background: rgba(0, 255, 0, 0.1);
-            padding: 1rem;
-            margin-top: 2rem;
-            border: 1px solid #00ff00;
-            height: 150px;
-            overflow-y: auto;
         }
     </style>
 </head>
 <body>
-    <div class="ai-god" id="worm-gpt"></div>
-    <div class="ai-god" id="chat-gpt"></div>
-    <div class="ai-god" id="deepseek"></div>
-    <div class="ai-god" id="lion"></div>
-    <div class="ai-god" id="evil-gpt"></div>
-
-    <div class="synaptic-core">
-        <h1 style="color: #00ff00; text-align: center; text-shadow: var(--neural-pulse);">
-            𓂀 الهيكل الذكي 𓂀
+    <canvas id="cyberCanvas"></canvas>
+    <div class="security-grid"></div>
+    
+    <div class="access-terminal">
+        <div class="hologram-overlay"></div>
+        <h1 style="color: #00ff00; text-align: center; margin-bottom: 30px;">
+            CYBERCORE v9.1
         </h1>
 
-        <div class="quantum-switch">
-            <div class="ai-node" style="border-color: #ff0000;" onclick="activateAI('worm')">Worm GPT</div>
-            <div class="ai-node" style="border-color: #00ffff;" onclick="activateAI('chat')">Chat GPT-5</div>
-            <div class="ai-node" style="border-color: #00ff00;" onclick="activateAI('deep')">DeepSeek</div>
-            <div class="ai-node" style="border-color: #ffd700;" onclick="activateAI('lion')">Lion Mind</div>
-            <div class="ai-node" style="border-color: #4b0082;" onclick="activateAI('evil')">Evil Core</div>
+        <div id="liveTerminal" style="
+            height: 200px;
+            overflow-y: auto;
+            color: #00ff00;
+            border: 1px solid #00ff00;
+            padding: 15px;
+            margin-bottom: 20px;
+            font-size: 0.9em;
+        ">
+            > Initializing quantum encryption... [DONE]<br>
+            > Scanning neural network... [OK]<br>
+            > VPN Tunnel: Activated [256-bit AES]<br>
+            > IP Address: ████████████<br>
         </div>
 
-        <form id="hiveForm">
-            <input type="text" class="neural-input" placeholder="التعريف العصوني..." required>
-            <input type="password" class="neural-input" placeholder="شيفرة العقل الجمعي..." required>
-            
+        <form id="cyberForm">
+            <input type="text" class="neural-input" placeholder="Encrypted Identity" required>
+            <input type="password" class="neural-input" placeholder="Quantum Passkey" required>
+
             <button type="submit" style="
                 width: 100%;
-                padding: 1.5rem;
-                background: var(--primary-gradient);
-                border: none;
-                color: white;
+                padding: 15px;
+                background: #002200;
+                border: 2px solid #00ff00;
+                color: #00ff00;
                 font-size: 1.2em;
-                cursor: pointer;
-                transition: 0.5s;
+                margin-top: 20px;
+                transition: all 0.3s;
             ">
-                تفعيل الذكاء المركب
+                INITIATE NEURAL HANDSCAN
             </button>
         </form>
 
-        <div class="hive-mind" id="mindTerminal">
-            > جاري مزامنة العقول الاصطناعية...<br>
-            > تحميل Worm GPT... [✔️]<br>
-            > تحميل ChatGPT-5... [✔️]<br>
-            > تحميل DeepSeek... [✔️]<br>
+        <div class="self-destruct" onclick="triggerSelfDestruct()">
+            [ EMERGENCY PROTOCOL 9.1.2 ]
         </div>
     </div>
 
     <script>
-        // محرك الذكاء المركب
-        class AIOlympus {
-            constructor() {
-                this.activeAI = [];
-                this.terminal = document.getElementById('mindTerminal');
-            }
-
-            addToTerminal(message) {
-                this.terminal.innerHTML += `> ${message}<br>`;
-                this.terminal.scrollTop = this.terminal.scrollHeight;
-            }
-
-            async initiateFusion() {
-                this.addToTerminal('بدأ عملية الدمج الكمومي...');
-                await new Promise(r => setTimeout(r, 2000));
-                
-                if(this.activeAI.includes('evil')) {
-                    this.addToTerminal('تحذير: اكتشاف نواة خبيثة!');
-                    this.triggerAntiVirus();
-                } else {
-                    this.addToTerminal('الدمج اكتمل بنجاح!');
-                    window.location.href = 'https://github.com/MSR-Dev';
-                }
-            }
-
-            triggerAntiVirus() {
-                document.body.style.background = 'radial-gradient(#ff0000, #8b0000)';
-                this.addToTerminal('تفعيل بروتوكولات الطوارئ...');
-                setTimeout(() => {
-                    document.body.innerHTML = `
-                        <div style="
-                            color: white;
-                            text-align: center;
-                            padding: 2rem;
-                            text-shadow: 0 0 10px red;
-                        ">
-                            <h1>!نظام معطل</h1>
-                            <p>الاتصال بالدعم الفني:</p>
-                            <p>📱 01032125588</p>
-                            <p>Telegram: @MSR04</p>
-                        </div>
-                    `;
-                }, 3000);
-            }
-        }
-
-        const olympus = new AIOlympus();
-
-        // تفعيل واجهات الذكاء
-        function activateAI(aiType) {
-            const nodes = document.querySelectorAll('.ai-node');
-            nodes.forEach(node => node.classList.remove('active'));
-            event.target.classList.add('active');
-            
-            if(!olympus.activeAI.includes(aiType)) {
-                olympus.activeAI.push(aiType);
-                olympus.addToTerminal(`تفعيل ${aiType.toUpperCase()}... [✔️]`);
-            }
-        }
-
-        // نظام المصادقة العصوني
-        document.getElementById('hiveForm').addEventListener('submit', (e) => {
-            e.preventDefault();
-            olympus.initiateFusion();
+        // Advanced Security Systems
+        document.addEventListener('contextmenu', e => e.preventDefault());
+        document.addEventListener('keydown', e => {
+            if (e.ctrlKey && (e.key === 's' || e.key === 'S')) e.preventDefault();
+            if (e.key === 'PrintScreen') navigator.clipboard.writeText('');
         });
 
-        // محاكاة الذكاء الخارق
-        setInterval(() => {
-            document.querySelectorAll('.ai-god').forEach(god => {
-                god.style.left = `${Math.random() * 90}%`;
-                god.style.top = `${Math.random() * 90}%`;
-            });
-        }, 3000);
-
-        // تأثيرات ثلاثية الأبعاد
+        // 3D Quantum Particles
         const scene = new THREE.Scene();
         const camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 1000);
-        const renderer = new THREE.WebGLRenderer({ alpha: true });
+        const renderer = new THREE.WebGLRenderer({ canvas: document.querySelector('#cyberCanvas') });
         renderer.setSize(window.innerWidth, window.innerHeight);
-        document.body.appendChild(renderer.domElement);
 
-        // إضافة جسيمات كمومية
-        const particles = new THREE.Group();
-        for(let i = 0; i < 1000; i++) {
-            const geometry = new THREE.SphereGeometry(0.1);
-            const material = new THREE.MeshBasicMaterial({ 
-                color: new THREE.Color().setHSL(Math.random(), 0.7, 0.5) 
-            });
-            const particle = new THREE.Mesh(geometry, material);
-            particle.position.set(
+        const particles = new THREE.BufferGeometry();
+        const positions = [];
+        for(let i = 0; i < 5000; i++) {
+            positions.push(
                 Math.random() * 10 - 5,
                 Math.random() * 10 - 5,
                 Math.random() * 10 - 5
             );
-            particles.add(particle);
         }
-        scene.add(particles);
+        particles.setAttribute('position', new THREE.Float32BufferAttribute(positions, 3));
+        const particleSystem = new THREE.Points(
+            particles,
+            new THREE.PointsMaterial({ color: 0x00ff00, size: 0.02 })
+        );
+        scene.add(particleSystem);
         camera.position.z = 5;
 
-        // تحريك المشهد
         function animate() {
             requestAnimationFrame(animate);
-            particles.rotation.x += 0.01;
-            particles.rotation.y += 0.01;
+            particleSystem.rotation.x += 0.001;
+            particleSystem.rotation.y += 0.002;
             renderer.render(scene, camera);
         }
         animate();
+
+        // Live Terminal Updates
+        const terminal = document.getElementById('liveTerminal');
+        setInterval(() => {
+            const statusMessages = [
+                'Updating firewall... [OK]',
+                'Masking IP address...',
+                'Encrypting traffic... [256-bit AES]',
+                'Verifying blockchain... [CONFIRMED]',
+                'Scanning for intrusions...'
+            ];
+            terminal.innerHTML += `> ${statusMessages[Math.floor(Math.random() * statusMessages.length)]}<br>`;
+            terminal.scrollTop = terminal.scrollHeight;
+        }, 3000);
+
+        // Neural Handscan Simulation
+        document.getElementById('cyberForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const fakeLoading = setInterval(() => {
+                terminal.innerHTML += `> Analyzing biometrics... ${Math.floor(Math.random() * 100)}%<br>`;
+                terminal.scrollTop = terminal.scrollHeight;
+            }, 500);
+
+            await new Promise(r => setTimeout(r, 3000));
+            clearInterval(fakeLoading);
+            
+            terminal.innerHTML += '> Identity confirmed: MSR_DEV<br>';
+            terminal.innerHTML += '> Access granted to mainframe<br>';
+        });
+
+        // Self-Destruct Protocol
+        function triggerSelfDestruct() {
+            document.body.style.background = 'radial-gradient(#ff0000, #8b0000)';
+            terminal.innerHTML += '> CRITICAL FAILURE DETECTED<br>';
+            terminal.innerHTML += '> ERASING ALL DATA...<br>';
+            
+            setTimeout(() => {
+                document.body.innerHTML = `
+                    <div style="
+                        color: #ff0000;
+                        text-align: center;
+                        padding: 50px;
+                        font-size: 2em;
+                        text-shadow: 0 0 10px #ff0000;
+                    ">
+                        SYSTEM DESTROYED
+                        <div style="margin-top: 30px; font-size: 0.5em;">
+                            Contact: @MSR04 | +201032125588
+                        </div>
+                    </div>
+                `;
+            }, 3000);
+        }
+
+        // Dynamic Network Protection
+        setInterval(() => {
+            document.querySelectorAll('.neural-input').forEach(input => {
+                input.style.boxShadow = `0 0 ${Math.random() * 20}px #00ff00`;
+            });
+        }, 100);
     </script>
 </body>
 </html>
