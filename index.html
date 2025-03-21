@@ -6,32 +6,21 @@
   <title>CyberCore v14.0 Ultimate Edition Extreme - MSR</title>
   <link rel="icon" href="https://via.placeholder.com/32/00ff00/000000?text=MSR">
   <style>
-    /* إعادة تعيين بعض القواعد مع السماح لعناصر الإدخال بالظهور بشكل طبيعي */
-    * { margin:0; padding:0; box-sizing:border-box; user-select:none; -webkit-tap-highlight-color:transparent; }
-    /* السماح لعناصر النماذج باستخدام مؤشر افتراضي */
-    input, textarea, select, button { cursor:auto !important; }
+    * { margin:0; padding:0; box-sizing:border-box; cursor:none !important; user-select:none; -webkit-tap-highlight-color:transparent; }
     body { background:#000; overflow-x:hidden; font-family:'Consolas', monospace; position:relative; min-height:100vh; color:#00ff00; }
-    /* البانر العلوي */
     .top-banner { position:fixed; top:0; left:0; width:100%; background:#001100; padding:10px 0; text-align:center; font-size:1.2em; letter-spacing:1px; z-index:400; overflow:hidden; }
     .top-banner span { display:inline-block; white-space:nowrap; }
-    /* زر الصوت */
     .sound-toggle { position:fixed; top:15px; right:15px; z-index:450; background:#001100; border:2px solid #00ff00; border-radius:5px; padding:5px 10px; cursor:pointer; font-size:0.9em; color:#00ff00; }
-    /* لوحة التحكم + بيانات التواصل */
     .control-panel { position:fixed; bottom:15px; left:15px; z-index:450; background:rgba(0,0,0,0.85); border:2px solid #00ff00; border-radius:5px; padding:10px 15px; font-size:0.8em; color:#00ff00; line-height:1.4em; }
-    /* إعدادات النظام */
     .settings-panel { position:fixed; bottom:15px; right:15px; z-index:450; background:rgba(0,0,0,0.85); border:2px solid #00ff00; border-radius:5px; padding:10px 15px; font-size:0.8em; color:#00ff00; line-height:1.4em; }
     .settings-panel label { margin-right:10px; }
-    /* زر دعم مباشر */
     .chat-support { position:fixed; bottom:80px; left:50%; transform:translateX(-50%); z-index:450; background:#001100; border:2px solid #00ff00; border-radius:5px; padding:5px 10px; cursor:pointer; font-size:0.9em; color:#00ff00; }
-    /* نافذة الدردشة */
     .chat-modal { position:fixed; top:50%; left:50%; transform:translate(-50%,-50%); background:rgba(0,0,0,0.95); border:2px solid #00ff00; border-radius:10px; padding:20px; width:300px; z-index:600; display:none; }
     .chat-modal h3 { margin-bottom:10px; font-size:1.4em; text-align:center; }
     .chat-modal p { font-size:0.9em; margin-bottom:10px; }
     .chat-modal button { width:100%; padding:8px; background:#002200; border:2px solid #00ff00; color:#00ff00; font-size:1em; border-radius:5px; cursor:pointer; }
-    /* خلفية ثلاثية الأبعاد */
     #cyberCanvas { position:fixed; top:0; left:0; z-index:100; }
     .security-grid { position:fixed; width:100%; height:100%; background-image:linear-gradient(rgba(0,255,0,0.1) 1px,transparent 1px), linear-gradient(90deg, rgba(0,255,0,0.1) 1px,transparent 1px); background-size:20px 20px; z-index:50; }
-    /* المحطة الرئيسية */
     .access-terminal { position:absolute; top:65%; left:50%; transform:translate(-50%,-50%); width:600px; max-width:95%; background:rgba(0,0,0,0.95); border:3px solid #00ff00; border-radius:10px; padding:20px; box-shadow:0 0 50px #00ff00; z-index:300; opacity:1; overflow:hidden; }
     .access-terminal h1 { text-align:center; margin-bottom:20px; font-size:1.8em; letter-spacing:3px; text-shadow:0 0 10px #00ff00; }
     .hologram-overlay { position:absolute; width:100%; height:100%; top:0; left:0; background:repeating-linear-gradient(45deg, transparent, transparent 2px, rgba(0,255,0,0.15) 3px, rgba(0,255,0,0.15) 4px); pointer-events:none; }
@@ -42,14 +31,18 @@
     button:hover { background:#003300; transform:scale(1.03); }
     .self-destruct { position:fixed; bottom:20px; right:20px; color:#ff0000; font-size:0.8em; cursor:pointer; z-index:400; padding:5px 10px; border:1px solid #ff0000; border-radius:3px; transition:background 0.3s; }
     .self-destruct:hover { background:rgba(255,0,0,0.2); }
-    /* صفحة التسجيل */
+    #trailingText { position:fixed; font-size:0.8em; pointer-events:none; z-index:1000; color:#00ff00; opacity:0.7; transition:transform 0.1s; }
     .registration-page { position:relative; width:100%; max-width:500px; margin:30px auto 0; background:rgba(0,0,0,0.95); border:2px solid #00ff00; border-radius:10px; padding:20px; box-shadow:0 0 30px #00ff00; }
     .registration-page h2 { text-align:center; margin-bottom:15px; font-size:1.6em; letter-spacing:2px; color:#00ff00; }
     .registration-page form { display:flex; flex-direction:column; }
     .registration-page input { width:100%; padding:12px; margin:8px 0; border:1px solid #00ff00; border-radius:5px; background:#001100; color:#00ff00; font-size:1em; }
     .registration-page button { padding:12px; background:#002200; border:2px solid #00ff00; color:#00ff00; font-size:1em; margin-top:10px; border-radius:5px; cursor:pointer; }
     .registration-page button:hover { background:#003300; }
-    @media (max-width:768px) { .access-terminal { width:90%; padding:15px; } .top-banner { font-size:1em; } .registration-page { width:90%; } }
+    .faq-section { max-width:600px; margin:30px auto; padding:20px; background:rgba(0,0,0,0.95); border:2px solid #00ff00; border-radius:10px; color:#00ff00; }
+    .faq-section h2 { text-align:center; margin-bottom:15px; }
+    .faq-section details { margin-bottom:10px; border:1px solid #00ff00; padding:10px; border-radius:5px; }
+    .faq-section summary { font-weight:bold; cursor:pointer; }
+    @media (max-width:768px) { .access-terminal { width:90%; padding:15px; } .top-banner { font-size:1em; } .registration-page, .faq-section { width:90%; } }
   </style>
 </head>
 <body>
@@ -99,8 +92,9 @@
     </form>
   </div>
   <div class="self-destruct" onclick="triggerSelfDestruct()">[ بروتوكول الطوارئ 14.0.7 ]</div>
+  <div id="trailingText">اضغط هنا</div>
   <div class="registration-page">
-    <h2>إنشاء حساب جديد</h2>
+    <h2>تسجيل حساب جديد</h2>
     <form id="registrationForm">
       <input type="text" placeholder="اسم المستخدم" required>
       <input type="email" placeholder="البريد الإلكتروني" required>
@@ -109,7 +103,21 @@
       <button type="submit">تسجيل</button>
     </form>
   </div>
-  <!-- إزالة قسم FAQ ونص تتبع الضغط (لم يعد مطلوباً) -->
+  <div class="faq-section">
+    <h2>الأسئلة الشائعة</h2>
+    <details>
+      <summary>ما هو CyberCore؟</summary>
+      <p>هو نظام محاكي متطور يقدم تجربة واجهة مستخدم تفاعلية تجمع بين تأثيرات ثلاثية الأبعاد ومميزات خيالية.</p>
+    </details>
+    <details>
+      <summary>من هو المطور؟</summary>
+      <p>المطور هو MSR، يمكن التواصل معه عبر تيليجرام @MSR04 أو واتساب 01032125588.</p>
+    </details>
+    <details>
+      <summary>كيف يمكنني تغيير الثيم؟</summary>
+      <p>يمكنك استخدام لوحة الإعدادات لتغيير ثيم الطرفية وكثافة الجسيمات.</p>
+    </details>
+  </div>
   <audio id="ambientSound" loop>
     <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
   </audio>
@@ -122,16 +130,14 @@
   <audio id="permissionDeniedSound">
     <source src="https://www.myinstants.com/media/sounds/voice-permission-denied.mp3" type="audio/mpeg">
   </audio>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.7.1/gsap.min.js"></script>
   <script>
-    // منع القائمة السياقية والمفاتيح المحجوزة
     document.addEventListener('contextmenu', e => e.preventDefault());
     document.addEventListener('keydown', e => { if(e.ctrlKey && (e.key==='s' || e.key==='S')) e.preventDefault(); if(e.key==='PrintScreen') navigator.clipboard.writeText(''); });
-    
-    // بدء تشغيل الصوت
     const ambientSound = document.getElementById('ambientSound');
     ambientSound.volume = 0.15;
     ambientSound.play().catch(()=>{});
-    
     const soundToggle = document.getElementById('soundToggle');
     let soundEnabled = true;
     soundToggle.addEventListener('click', () => { 
@@ -139,7 +145,6 @@
       ambientSound.muted = !soundEnabled;
       soundToggle.textContent = soundEnabled ? "صوت: مفعّل" : "صوت: مُعطّل";
     });
-    
     gsap.to("#bannerText", { x: -document.getElementById("bannerText").offsetWidth, duration:15, ease:"linear", repeat:-1 });
     document.getElementById('topBanner').addEventListener('click', () => { 
       gsap.to("#topBanner", {duration:0.5, backgroundColor:"#003300", onComplete: () => {
@@ -147,14 +152,11 @@
         gsap.to("#topBanner", {duration:0.5, backgroundColor:"#001100"});
       }});
     });
-    
-    // إعداد مشهد Three.js
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 1000);
     const renderer = new THREE.WebGLRenderer({ canvas: document.getElementById('cyberCanvas'), alpha:true });
     renderer.setSize(window.innerWidth, window.innerHeight);
     camera.position.z = 5;
-    
     let particleCount = parseInt(document.getElementById('particleDensity').value);
     let positions = [];
     function generateParticles(count){
@@ -169,13 +171,11 @@
     const particleMaterial = new THREE.PointsMaterial({ color:0x00ff00, size:0.05, transparent:true, opacity:0.8 });
     let particleSystem = new THREE.Points(particles, particleMaterial);
     scene.add(particleSystem);
-    
     document.getElementById('particleDensity').addEventListener('input', e => { 
       particleCount = parseInt(e.target.value);
       generateParticles(particleCount);
       particles.setAttribute('position', new THREE.Float32BufferAttribute(positions, 3));
     });
-    
     document.getElementById('terminalTheme').addEventListener('change', e => { 
       const themeColor = e.target.value;
       document.querySelectorAll('.neural-input, button, .access-terminal h1, #liveTerminal').forEach(el => {
@@ -183,12 +183,10 @@
         el.style.borderColor = themeColor;
       });
     });
-    
     document.getElementById('resetParticles').addEventListener('click', () => {
       generateParticles(particleCount);
       particles.setAttribute('position', new THREE.Float32BufferAttribute(positions, 3));
     });
-    
     function animateScene(){
       requestAnimationFrame(animateScene);
       const time = Date.now()*0.0001;
@@ -197,16 +195,12 @@
       renderer.render(scene, camera);
     }
     animateScene();
-    
-    // تحديث الساعة
-    function updateClock(){
-      const clock = document.getElementById('clock');
-      const now = new Date();
-      clock.textContent = now.toLocaleTimeString();
-    }
-    setInterval(updateClock, 1000);
-    updateClock();
-    
+    const trailingText = document.getElementById('trailingText');
+    document.addEventListener('mousemove', e => {
+      trailingText.style.left = (e.clientX+20)+'px';
+      trailingText.style.top = (e.clientY+20)+'px';
+      trailingText.style.transform = `translate(-50%, -50%) scale(${1+Math.random()*0.05})`;
+    });
     const terminal = document.getElementById('liveTerminal');
     const messages = [
       'Initializing quantum encryption... [DONE]',
@@ -239,7 +233,6 @@
       });
     }
     setTimeout(startTerminalMessages,1000);
-    
     document.getElementById('cyberForm').addEventListener('submit', async (e) => {
       e.preventDefault();
       terminal.innerHTML += '> Analyzing biometrics...<br>';
@@ -262,7 +255,6 @@
         document.getElementById('permissionDeniedSound').play().catch(()=>{});
       }
     });
-    
     const alertSound = document.getElementById('alertSound'); 
     alertSound.volume = 0.5;
     function triggerSelfDestruct(){
@@ -275,12 +267,10 @@
         }});
       },3000);
     }
-    
     document.getElementById('registrationForm').addEventListener('submit', e => {
       e.preventDefault();
       alert("تم إنشاء الحساب بنجاح!");
     });
-    
     const chatSupport = document.getElementById('chatSupport');
     const chatModal = document.getElementById('chatModal');
     document.getElementById('chatSupport').addEventListener('click', () => {
@@ -289,16 +279,24 @@
     document.getElementById('closeChat').addEventListener('click', () => {
       chatModal.style.display = 'none';
     });
-    
-    // ميزة الوضع السري: عند النقر المزدوج على الكانفاس تغيير خلفية النظام مؤقتاً
+    // ميزة الساعة الديناميكية
+    function updateClock(){
+      const clock = document.getElementById('clock');
+      const now = new Date();
+      const timeStr = now.toLocaleTimeString();
+      clock.textContent = timeStr;
+    }
+    setInterval(updateClock, 1000);
+    updateClock();
+    // ميزة الوضع السري: عند النقر المزدوج على الكانفاس يتم تغيير خلفية النظام
     document.getElementById('cyberCanvas').addEventListener('dblclick', () => {
       document.body.style.background = '#111';
       gsap.to(document.body, {duration:1, background:'#000', ease:"power1.inOut"});
     });
-    
-    // ميزة وضع التصحيح: عند النقر بزر الفأرة الأيمن على لوحة التحكم عرض عدد الجسيمات
+    // ميزة وضع التصحيح: عند النقر بزر الفأرة الأيمن على لوحة التحكم يتم عرض عدد الجسيمات في وحدة التحكم
     document.getElementById('controlPanel').addEventListener('contextmenu', e => {
       e.preventDefault();
+      console.log("عدد الجسيمات:", particleCount);
       alert("وضع التصحيح: عدد الجسيمات الحالي هو " + particleCount);
     });
   </script>
