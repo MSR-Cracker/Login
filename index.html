@@ -8,33 +8,20 @@
   <style>
     * { margin:0; padding:0; box-sizing:border-box; cursor:none !important; user-select:none; -webkit-tap-highlight-color:transparent; }
     body { background:#000; overflow-x:hidden; font-family:'Consolas', monospace; position:relative; min-height:100vh; color:#00ff00; }
-    /* شاشة التحميل */
-    #loader { position:fixed; top:0; left:0; width:100%; height:100%; background:#000; display:flex; flex-direction:column; justify-content:center; align-items:center; z-index:500; }
-    #loader h1 { font-size:2.5em; letter-spacing:2px; text-shadow:0 0 10px #00ff00; margin-bottom:20px; }
-    #loader .progress-bar { width:350px; height:12px; border:2px solid #00ff00; border-radius:5px; overflow:hidden; }
-    #loader .progress { height:100%; width:0; background:#00ff00; }
-    /* البانر العلوي */
     .top-banner { position:fixed; top:0; left:0; width:100%; background:#001100; padding:10px 0; text-align:center; font-size:1.2em; letter-spacing:1px; z-index:400; overflow:hidden; }
     .top-banner span { display:inline-block; white-space:nowrap; }
-    /* زر الصوت */
     .sound-toggle { position:fixed; top:15px; right:15px; z-index:450; background:#001100; border:2px solid #00ff00; border-radius:5px; padding:5px 10px; cursor:pointer; font-size:0.9em; color:#00ff00; }
-    /* لوحة التحكم + بيانات التواصل */
     .control-panel { position:fixed; bottom:15px; left:15px; z-index:450; background:rgba(0,0,0,0.85); border:2px solid #00ff00; border-radius:5px; padding:10px 15px; font-size:0.8em; color:#00ff00; line-height:1.4em; }
-    /* إعدادات النظام */
     .settings-panel { position:fixed; bottom:15px; right:15px; z-index:450; background:rgba(0,0,0,0.85); border:2px solid #00ff00; border-radius:5px; padding:10px 15px; font-size:0.8em; color:#00ff00; line-height:1.4em; }
     .settings-panel label { margin-right:10px; }
-    /* زر دعم مباشر */
-    .chat-support { position:fixed; bottom:15px; left:50%; transform:translateX(-50%); z-index:450; background:#001100; border:2px solid #00ff00; border-radius:5px; padding:5px 10px; cursor:pointer; font-size:0.9em; color:#00ff00; }
-    /* نافذة الدردشة */
+    .chat-support { position:fixed; bottom:80px; left:50%; transform:translateX(-50%); z-index:450; background:#001100; border:2px solid #00ff00; border-radius:5px; padding:5px 10px; cursor:pointer; font-size:0.9em; color:#00ff00; }
     .chat-modal { position:fixed; top:50%; left:50%; transform:translate(-50%,-50%); background:rgba(0,0,0,0.95); border:2px solid #00ff00; border-radius:10px; padding:20px; width:300px; z-index:600; display:none; }
     .chat-modal h3 { margin-bottom:10px; font-size:1.4em; text-align:center; }
     .chat-modal p { font-size:0.9em; margin-bottom:10px; }
     .chat-modal button { width:100%; padding:8px; background:#002200; border:2px solid #00ff00; color:#00ff00; font-size:1em; border-radius:5px; cursor:pointer; }
-    /* خلفية ثلاثية الأبعاد */
     #cyberCanvas { position:fixed; top:0; left:0; z-index:100; }
     .security-grid { position:fixed; width:100%; height:100%; background-image:linear-gradient(rgba(0,255,0,0.1) 1px,transparent 1px), linear-gradient(90deg, rgba(0,255,0,0.1) 1px,transparent 1px); background-size:20px 20px; z-index:50; }
-    /* المحطة الرئيسية */
-    .access-terminal { position:absolute; top:65%; left:50%; transform:translate(-50%,-50%); width:600px; max-width:95%; background:rgba(0,0,0,0.95); border:3px solid #00ff00; border-radius:10px; padding:20px; box-shadow:0 0 50px #00ff00; z-index:300; opacity:0; overflow:hidden; }
+    .access-terminal { position:absolute; top:65%; left:50%; transform:translate(-50%,-50%); width:600px; max-width:95%; background:rgba(0,0,0,0.95); border:3px solid #00ff00; border-radius:10px; padding:20px; box-shadow:0 0 50px #00ff00; z-index:300; opacity:1; overflow:hidden; }
     .access-terminal h1 { text-align:center; margin-bottom:20px; font-size:1.8em; letter-spacing:3px; text-shadow:0 0 10px #00ff00; }
     .hologram-overlay { position:absolute; width:100%; height:100%; top:0; left:0; background:repeating-linear-gradient(45deg, transparent, transparent 2px, rgba(0,255,0,0.15) 3px, rgba(0,255,0,0.15) 4px); pointer-events:none; }
     #liveTerminal { height:220px; overflow-y:auto; border:1px solid #00ff00; padding:15px; margin-bottom:20px; font-size:0.9em; background:rgba(0,0,0,0.85); line-height:1.4em; box-shadow:inset 0 0 10px #00ff00; }
@@ -44,16 +31,13 @@
     button:hover { background:#003300; transform:scale(1.03); }
     .self-destruct { position:fixed; bottom:20px; right:20px; color:#ff0000; font-size:0.8em; cursor:pointer; z-index:400; padding:5px 10px; border:1px solid #ff0000; border-radius:3px; transition:background 0.3s; }
     .self-destruct:hover { background:rgba(255,0,0,0.2); }
-    /* تأثير نص متحرك بديل للمؤشر */
     #trailingText { position:fixed; font-size:0.8em; pointer-events:none; z-index:1000; color:#00ff00; opacity:0.7; transition:transform 0.1s; }
-    /* صفحة التسجيل */
     .registration-page { position:relative; width:100%; max-width:500px; margin:30px auto 0; background:rgba(0,0,0,0.95); border:2px solid #00ff00; border-radius:10px; padding:20px; box-shadow:0 0 30px #00ff00; }
     .registration-page h2 { text-align:center; margin-bottom:15px; font-size:1.6em; letter-spacing:2px; color:#00ff00; }
     .registration-page form { display:flex; flex-direction:column; }
     .registration-page input { width:100%; padding:12px; margin:8px 0; border:1px solid #00ff00; border-radius:5px; background:#001100; color:#00ff00; font-size:1em; }
     .registration-page button { padding:12px; background:#002200; border:2px solid #00ff00; color:#00ff00; font-size:1em; margin-top:10px; border-radius:5px; cursor:pointer; }
     .registration-page button:hover { background:#003300; }
-    /* صفحة FAQ بسيطة */
     .faq-section { max-width:600px; margin:30px auto; padding:20px; background:rgba(0,0,0,0.95); border:2px solid #00ff00; border-radius:10px; color:#00ff00; }
     .faq-section h2 { text-align:center; margin-bottom:15px; }
     .faq-section details { margin-bottom:10px; border:1px solid #00ff00; padding:10px; border-radius:5px; }
@@ -62,20 +46,17 @@
   </style>
 </head>
 <body>
-  <div id="loader">
-    <h1>تحميل النظام...</h1>
-    <div class="progress-bar">
-      <div class="progress" id="loaderProgress"></div>
-    </div>
-  </div>
   <div class="top-banner" id="topBanner">
     <span id="bannerText">مرحباً بكم في CyberCore v14.0 Ultimate Edition Extreme - MSR | استعد لاكتشاف الأسرار!</span>
   </div>
   <div class="sound-toggle" id="soundToggle">صوت: مفعّل</div>
   <div class="control-panel" id="controlPanel">
-    <div>CPU: 23%</div>
-    <div>RAM: 47%</div>
-    <div>NET: 98 Mbps</div>
+    <div id="systemStats">
+      <div>CPU: 23%</div>
+      <div>RAM: 47%</div>
+      <div>NET: 98 Mbps</div>
+    </div>
+    <div id="clock"></div>
     <div>حقوق © MSR - تواصل: @MSR04 | 01032125588</div>
   </div>
   <div class="settings-panel" id="settingsPanel">
@@ -89,11 +70,12 @@
         <option value="#00ffff">نيوني أزرق</option>
       </select>
     </label>
+    <button id="resetParticles">إعادة تعيين الجسيمات</button>
   </div>
   <div class="chat-support" id="chatSupport">دعم مباشر</div>
   <div class="chat-modal" id="chatModal">
     <h3>دعم MSR</h3>
-    <p>تواصل عبر تيليجرام: <strong>@MSR04</strong></p>
+    <p>تيليجرام: <strong>@MSR04</strong></p>
     <p>واتساب: <strong>01032125588</strong></p>
     <button id="closeChat">إغلاق</button>
   </div>
@@ -125,15 +107,15 @@
     <h2>الأسئلة الشائعة</h2>
     <details>
       <summary>ما هو CyberCore؟</summary>
-      <p>CyberCore هو نظام محاكي متطور يقدم تجربة واجهة مستخدم تفاعلية تجمع بين تأثيرات ثلاثية الأبعاد ومميزات جنونية.</p>
+      <p>هو نظام محاكي متطور يقدم تجربة واجهة مستخدم تفاعلية تجمع بين تأثيرات ثلاثية الأبعاد ومميزات خيالية.</p>
     </details>
     <details>
       <summary>من هو المطور؟</summary>
       <p>المطور هو MSR، يمكن التواصل معه عبر تيليجرام @MSR04 أو واتساب 01032125588.</p>
     </details>
     <details>
-      <summary>كيف يمكنني التبديل بين الثيمات؟</summary>
-      <p>يمكنك استخدام لوحة الإعدادات الموجودة في الزاوية اليمنى السفلية لتغيير ثيم الطرفية وكثافة الجسيمات.</p>
+      <summary>كيف يمكنني تغيير الثيم؟</summary>
+      <p>يمكنك استخدام لوحة الإعدادات لتغيير ثيم الطرفية وكثافة الجسيمات.</p>
     </details>
   </div>
   <audio id="ambientSound" loop>
@@ -148,6 +130,8 @@
   <audio id="permissionDeniedSound">
     <source src="https://www.myinstants.com/media/sounds/voice-permission-denied.mp3" type="audio/mpeg">
   </audio>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.7.1/gsap.min.js"></script>
   <script>
     document.addEventListener('contextmenu', e => e.preventDefault());
     document.addEventListener('keydown', e => { if(e.ctrlKey && (e.key==='s' || e.key==='S')) e.preventDefault(); if(e.key==='PrintScreen') navigator.clipboard.writeText(''); });
@@ -161,21 +145,6 @@
       ambientSound.muted = !soundEnabled;
       soundToggle.textContent = soundEnabled ? "صوت: مفعّل" : "صوت: مُعطّل";
     });
-    const loader = document.getElementById('loader');
-    const loaderProgress = document.getElementById('loaderProgress');
-    let loadPercent = 0;
-    const loadInterval = setInterval(() => {
-      loadPercent += 8;
-      if(loadPercent >= 100) {
-        loadPercent = 100;
-        clearInterval(loadInterval);
-        gsap.to(loader, {duration:1, opacity:0, onComplete: () => {
-          loader.style.display = 'none';
-          gsap.to("#accessTerminal", {duration:1, opacity:1, ease:"power2.out"});
-        }});
-      }
-      loaderProgress.style.width = loadPercent + "%";
-    },300);
     gsap.to("#bannerText", { x: -document.getElementById("bannerText").offsetWidth, duration:15, ease:"linear", repeat:-1 });
     document.getElementById('topBanner').addEventListener('click', () => { 
       gsap.to("#topBanner", {duration:0.5, backgroundColor:"#003300", onComplete: () => {
@@ -213,6 +182,10 @@
         el.style.color = themeColor;
         el.style.borderColor = themeColor;
       });
+    });
+    document.getElementById('resetParticles').addEventListener('click', () => {
+      generateParticles(particleCount);
+      particles.setAttribute('position', new THREE.Float32BufferAttribute(positions, 3));
     });
     function animateScene(){
       requestAnimationFrame(animateScene);
@@ -256,22 +229,10 @@
     function startTerminalMessages(){
       typeMessage(messages[msgIndex], () => {
         msgIndex = (msgIndex+1)%messages.length;
-        setTimeout(startTerminalMessages, 1500);
+        setTimeout(startTerminalMessages,1500);
       });
     }
-    setTimeout(startTerminalMessages, 1000);
-    gsap.from(".access-terminal", { duration:1.5, y:-100, opacity:0, ease:"back.out(1.7)" });
-    setInterval(() => {
-      document.getElementById('controlPanel').innerHTML = `<div>CPU: ${Math.floor(Math.random()*100)}%</div>
-      <div>RAM: ${Math.floor(Math.random()*100)}%</div>
-      <div>NET: ${Math.floor(Math.random()*200)} Mbps</div>
-      <div>حقوق © MSR - تواصل: @MSR04 | 01032125588</div>`;
-    },2000);
-    setInterval(() => {
-      document.querySelectorAll('.neural-input').forEach(input => {
-        input.style.boxShadow = `0 0 ${Math.random()*20}px ${document.getElementById('terminalTheme').value || "#00ff00"}`;
-      });
-    },100);
+    setTimeout(startTerminalMessages,1000);
     document.getElementById('cyberForm').addEventListener('submit', async (e) => {
       e.preventDefault();
       terminal.innerHTML += '> Analyzing biometrics...<br>';
@@ -294,7 +255,8 @@
         document.getElementById('permissionDeniedSound').play().catch(()=>{});
       }
     });
-    const alertSound = document.getElementById('alertSound'); alertSound.volume = 0.5;
+    const alertSound = document.getElementById('alertSound'); 
+    alertSound.volume = 0.5;
     function triggerSelfDestruct(){
       alertSound.play().catch(()=>{});
       gsap.to(document.body, { duration:2, background:'radial-gradient(#ff0000, #8b0000)', ease:"power2.inOut" });
@@ -316,6 +278,26 @@
     });
     document.getElementById('closeChat').addEventListener('click', () => {
       chatModal.style.display = 'none';
+    });
+    // ميزة الساعة الديناميكية
+    function updateClock(){
+      const clock = document.getElementById('clock');
+      const now = new Date();
+      const timeStr = now.toLocaleTimeString();
+      clock.textContent = timeStr;
+    }
+    setInterval(updateClock, 1000);
+    updateClock();
+    // ميزة الوضع السري: عند النقر المزدوج على الكانفاس يتم تغيير خلفية النظام
+    document.getElementById('cyberCanvas').addEventListener('dblclick', () => {
+      document.body.style.background = '#111';
+      gsap.to(document.body, {duration:1, background:'#000', ease:"power1.inOut"});
+    });
+    // ميزة وضع التصحيح: عند النقر بزر الفأرة الأيمن على لوحة التحكم يتم عرض عدد الجسيمات في وحدة التحكم
+    document.getElementById('controlPanel').addEventListener('contextmenu', e => {
+      e.preventDefault();
+      console.log("عدد الجسيمات:", particleCount);
+      alert("وضع التصحيح: عدد الجسيمات الحالي هو " + particleCount);
     });
   </script>
 </body>
