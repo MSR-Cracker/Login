@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CyberGate - تسجيل دخول الذكاء الاصطناعي</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        /* CSS معقد بمساحات لونية ثلاثية الأبعاد */
+        :root {
+            --matrix-green: #00ff9d;
+            --cyber-blue: #0066ff;
+            --neon-pink: #ff00ff;
+        }
+
+        body {
+            background: radial-gradient(circle at center, #000 0%, #001 100%);
+            height: 100vh;
+            margin: 0;
+            overflow: hidden;
+            position: relative;
+            font-family: 'Courier New', monospace;
+        }
+
+        .cyber-glitch {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: repeating-linear-gradient(
+                45deg,
+                transparent,
+                transparent 2px,
+                var(--matrix-green) 3px,
+                var(--matrix-green) 4px
+            );
+            animation: glitch 0.1s infinite;
+            opacity: 0.1;
+            pointer-events: none;
+        }
+
+        @keyframes glitch {
+            0% { transform: translate(2px, 0); }
+            20% { transform: translate(-2px, 2px); }
+            40% { transform: translate(-2px, -2px); }
+            60% { transform: translate(2px, 2px); }
+            80% { transform: translate(2px, -2px); }
+            100% { transform: translate(0); }
+        }
+
+        .login-container {
+            background: rgba(0, 0, 0, 0.9);
+            border: 2px solid var(--matrix-green);
+            box-shadow: 0 0 30px var(--matrix-green);
+            border-radius: 15px;
+            padding: 2rem;
+            width: 400px;
+            position: relative;
+            backdrop-filter: blur(10px);
+            transform-style: preserve-3d;
+            perspective: 1000px;
+        }
+
+        h1 {
+            color: var(--matrix-green);
+            text-shadow: 0 0 10px var(--matrix-green);
+            font-size: 2.5em;
+            margin-bottom: 2rem;
+            position: relative;
+            animation: text-flow 3s infinite;
+        }
+
+        @keyframes text-flow {
+            0% { text-shadow: 0 0 10px var(--matrix-green); }
+            50% { text-shadow: 0 0 20px var(--matrix-green), 0 0 30px var(--neon-pink); }
+            100% { text-shadow: 0 0 10px var(--matrix-green); }
+        }
+
+        .input-group {
+            position: relative;
+            margin-bottom: 2rem;
+        }
+
+        input {
+            width: 100%;
+            padding: 1rem;
+            background: transparent;
+            border: 1px solid var(--cyber-blue);
+            color: var(--matrix-green);
+            font-size: 1.2em;
+            transition: all 0.3s;
+            box-shadow: 0 0 10px var(--cyber-blue);
+        }
+
+        input:focus {
+            outline: none;
+            border-color: var(--neon-pink);
+            box-shadow: 0 0 20px var(--neon-pink);
+        }
+
+        .hologram-avatar {
+            width: 120px;
+            height: 120px;
+            background: linear-gradient(45deg, var(--cyber-blue), var(--neon-pink));
+            border-radius: 50%;
+            margin: 0 auto 2rem;
+            position: relative;
+            animation: hologram 3s infinite;
+        }
+
+        @keyframes hologram {
+            0% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0); }
+        }
+
+        .cyber-button {
+            background: linear-gradient(45deg, var(--cyber-blue), var(--neon-pink));
+            border: none;
+            padding: 1rem;
+            color: white;
+            font-size: 1.2em;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            transition: 0.5s;
+        }
+
+        .cyber-button:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 30px var(--neon-pink);
+        }
+
+        .hacking-terminal {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0, 0, 0, 0.8);
+            color: var(--matrix-green);
+            padding: 1rem;
+            font-family: monospace;
+            border-top: 2px solid var(--matrix-green);
+        }
+
+        .powered-by {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            color: var(--matrix-green);
+            font-size: 0.8em;
+        }
+    </style>
+</head>
+<body>
+    <div class="cyber-glitch"></div>
+    
+    <div class="login-container">
+        <div class="hologram-avatar"></div>
+        <h1>CyberGate v4.2</h1>
+        
+        <form id="loginForm">
+            <div class="input-group">
+                <input type="email" id="email" placeholder="التحقق من الهوية..." required>
+            </div>
+            
+            <div class="input-group">
+                <input type="password" id="password" placeholder="كود الدخول..." required>
+            </div>
+
+            <button type="submit" class="cyber-button">
+                <span class="blink">_</span> بدء الاختراق <span class="blink">_</span>
+            </button>
+        </form>
+
+        <div class="hacking-terminal">
+            > جاري تحميل أنظمة الحماية... [██████████] 100%<br>
+            > تشفير AES-256 مفعل<br>
+            > جاهز لمصادقة ثنائية
+        </div>
+    </div>
+
+    <div class="powered-by">
+        Powered by <span style="color: var(--neon-pink)">MSR</span> | 
+        <a href="https://t.me/MSR04" target="_blank" style="color: var(--cyber-blue)">@MSR04</a> |
+        <a href="tel:+201032125588" style="color: var(--matrix-green)">📱 اتصل بي</a>
+    </div>
+
+    <script>
+        // نظام مصادقة بالذكاء الاصطناعي
+        class CyberAuth {
+            constructor() {
+                this.attempts = 0;
+                this.lockTimeout = null;
+            }
+
+            async quantumEncrypt(password) {
+                const encoder = new TextEncoder();
+                const data = encoder.encode(password);
+                const hashBuffer = await crypto.subtle.digest('SHA-512', data);
+                return Array.from(new Uint8Array(hashBuffer)).map(b => b.toString(16).padStart(2, '0')).join('');
+            }
+
+            async login(email, password) {
+                if (this.attempts >= 3) {
+                    this.initiateLockdown();
+                    return {success: false, message: "نظام مغلق - اكتشاف محاولات اختراق!"};
+                }
+
+                const encryptedPass = await this.quantumEncrypt(password);
+                // محاكاة اتصال ب Blockchain
+                return new Promise(resolve => {
+                    setTimeout(() => {
+                        if (email === 'admin@cybergate.com' && password === 'MSR2024') {
+                            this.triggerDefenseSystem(true);
+                            resolve({success: true});
+                        } else {
+                            this.attempts++;
+                            this.triggerDefenseSystem(false);
+                            resolve({success: false, message: "فشل المصادقة الكمومية"});
+                        }
+                    }, 2000);
+                });
+            }
+
+            triggerDefenseSystem(success) {
+                document.body.style.background = success ? 
+                    "radial-gradient(circle at center, #0f0 0%, #000 100%)" : 
+                    "radial-gradient(circle at center, #f00 0%, #000 100%)";
+                
+                if (!success) {
+                    document.querySelector('.login-container').style.animation = 'vibrate 0.5s';
+                    setTimeout(() => {
+                        document.querySelector('.login-container').style.animation = '';
+                    }, 500);
+                }
+            }
+
+            initiateLockdown() {
+                document.body.innerHTML = `
+                    <div class="lockdown">
+                        <h1>🚨 نظام مغلق 🚨</h1>
+                        <p>تم اكتشاف نشاط مشبوه!</p>
+                        <p>الاتصال بالمسؤول: <a href="tel:+201032125588">01032125588</a></p>
+                    </div>
+                `;
+            }
+        }
+
+        const authSystem = new CyberAuth();
+
+        document.getElementById('loginForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const result = await authSystem.login(
+                document.getElementById('email').value,
+                document.getElementById('password').value
+            );
+
+            if (result.success) {
+                window.location.href = 'https://github.com/MSR-Dev';
+            } else {
+                alert(result.message);
+            }
+        });
+
+        // تأثيرات كتابة الهولوغرام
+        const inputs = document.querySelectorAll('input');
+        inputs.forEach(input => {
+            input.addEventListener('focus', () => {
+                input.style.animation = 'neon-pulse 1s infinite';
+            });
+            
+            input.addEventListener('blur', () => {
+                input.style.animation = '';
+            });
+        });
+    </script>
+</body>
+  </html>
