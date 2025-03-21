@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>CyberCore v13.0 - Ultimate Edition by Innovators</title>
+  <title>CyberCore v14.0 Ultimate Edition by Innovators</title>
   <!-- استيراد المكتبات -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.7.1/gsap.min.js"></script>
@@ -225,17 +225,15 @@
     .self-destruct:hover {
       background: rgba(255, 0, 0, 0.2);
     }
-    /* المؤشر المخصص مع تأثير ذيل بسيط */
-    .custom-cursor {
+    /* تأثير نص متحرك يتبع الماوس بدلاً من دائرة المؤشر */
+    #trailingText {
       position: fixed;
-      width: 20px;
-      height: 20px;
-      border: 2px solid #00ff00;
-      border-radius: 50%;
+      font-size: 0.8em;
       pointer-events: none;
-      transform: translate(-50%, -50%);
       z-index: 1000;
-      transition: background-color 0.3s, transform 0.1s;
+      color: #00ff00;
+      opacity: 0.7;
+      transition: transform 0.1s;
     }
     @media (max-width: 768px) {
       .access-terminal {
@@ -265,7 +263,7 @@
   <!-- زر التحكم بالصوت -->
   <div class="sound-toggle" id="soundToggle">صوت: مفعّل</div>
 
-  <!-- لوحة تحكم النظام الصغيرة -->
+  <!-- لوحة التحكم الصغيرة للنظام -->
   <div class="control-panel" id="controlPanel">
     <div>CPU: 23%</div>
     <div>RAM: 47%</div>
@@ -281,7 +279,7 @@
     <div class="hologram-overlay"></div>
     <h1>CYBERCORE v13.0</h1>
     <div id="liveTerminal">
-      <!-- رسائل الطرفية ستظهر هنا -->
+      <!-- رسائل الطرفية ستظهر هنا بتأثير الكتابة -->
     </div>
     <form id="cyberForm">
       <input type="text" class="neural-input" placeholder="الهوية المشفرة" required>
@@ -293,8 +291,8 @@
   <!-- زر الطوارئ -->
   <div class="self-destruct" onclick="triggerSelfDestruct()">[ بروتوكول الطوارئ 13.0.5 ]</div>
   
-  <!-- المؤشر المخصص -->
-  <div class="custom-cursor" id="customCursor"></div>
+  <!-- تأثير نص متحرك يتبع حركة الماوس -->
+  <div id="trailingText">اضغط هنا</div>
 
   <!-- مؤثرات صوتية -->
   <audio id="ambientSound" loop>
@@ -302,6 +300,13 @@
   </audio>
   <audio id="alertSound">
     <source src="https://www.soundjay.com/button/beep-07.mp3" type="audio/mpeg">
+  </audio>
+  <!-- أصوات جديدة (امرأة)؛ يرجى استبدال الروابط برابط ملف صوتي صحيح -->
+  <audio id="accessGrantedSound">
+    <source src="https://www.myinstants.com/media/sounds/voice-access-granted.mp3" type="audio/mpeg">
+  </audio>
+  <audio id="permissionDeniedSound">
+    <source src="https://www.myinstants.com/media/sounds/voice-permission-denied.mp3" type="audio/mpeg">
   </audio>
 
   <script>
@@ -390,15 +395,15 @@
     }
     animateScene();
 
-    /* تأثير المؤشر المخصص مع حركة ذيل خفيفة */
-    const customCursor = document.getElementById('customCursor');
+    /* تأثير نص متحرك يتبع حركة الماوس */
+    const trailingText = document.getElementById('trailingText');
     document.addEventListener('mousemove', e => {
-      customCursor.style.left = e.clientX + 'px';
-      customCursor.style.top = e.clientY + 'px';
-      customCursor.style.transform = `translate(-50%, -50%) scale(${1 + Math.random() * 0.1})`;
+      trailingText.style.left = e.clientX + 20 + 'px';
+      trailingText.style.top = e.clientY + 20 + 'px';
+      trailingText.style.transform = `translate(-50%, -50%) scale(${1 + Math.random() * 0.05})`;
     });
 
-    /* تأثير الكتابة (Typewriter) في الطرفية */
+    /* محاكاة الفحص البيومتري مع قرار عشوائي لتجربة "Access Granted" أو "Permission Denied" */
     const terminal = document.getElementById('liveTerminal');
     const messages = [
       'Initializing quantum encryption... [DONE]',
@@ -451,7 +456,7 @@
       });
     }, 100);
 
-    /* محاكاة الفحص العصبي وإظهار النتائج في الطرفية */
+    /* محاكاة الفحص البيومتري مع قرار عشوائي وتشغيل الصوت المناسب */
     document.getElementById('cyberForm').addEventListener('submit', async (e) => {
       e.preventDefault();
       terminal.innerHTML += '> Analyzing biometrics...<br>';
@@ -465,7 +470,18 @@
       }, 400);
       await new Promise(r => setTimeout(r, 3000));
       clearInterval(loadingInterval);
-      terminal.innerHTML += '> Identity confirmed: MSR_DEV<br>> Access granted to mainframe<br>';
+      
+      // قرار عشوائي لمحاكاة نجاح الفحص أو فشله
+      const outcome = Math.random() > 0.5 ? "granted" : "denied";
+      if(outcome === "granted") {
+        terminal.innerHTML += '> Identity confirmed: MSR_DEV<br>> Access granted to mainframe<br>';
+        // تشغيل صوت "Access Granted" (صوت امرأة)
+        document.getElementById('accessGrantedSound').play().catch(() => {});
+      } else {
+        terminal.innerHTML += '> Identity not recognized<br>> Permission denied<br>';
+        // تشغيل صوت "Permission Denied" (صوت امرأة)
+        document.getElementById('permissionDeniedSound').play().catch(() => {});
+      }
     });
 
     /* مؤثر صوتي للطوارئ */
@@ -496,4 +512,4 @@
     }
   </script>
 </body>
-</html>
+  </html>
